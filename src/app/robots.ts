@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://turboride.in/sitemap.xml',
+    sitemap: 'https://turboridesupercars.com/sitemap.xml',
   };
 }

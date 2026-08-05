@@ -124,6 +124,6 @@ export const FAQS_DATA: FAQItem[] = [
     id: "faq-20",
     category: "Contact",
     question: "How can I contact customer support or collaborate as an influencer?",
-    answer: "For inquiries, influencer collaborations, or booking assistance, reach out to us directly:\n• WhatsApp / Call: +91 63639 35011 (8:00 AM – 8:00 PM)\n• Email: hello@turboride.in"
+    answer: "For inquiries, influencer collaborations, or booking assistance, reach out to us directly:\n• WhatsApp / Call: +91 63639 35011 (11:00 AM – 5:00 PM)\n• Email: hello@turboridesupercars.com"
   }
 ];

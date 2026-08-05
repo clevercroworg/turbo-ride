@@ -17,49 +17,55 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "TurboRide Supercars | Luxury Supercar Rental Bangalore",
-  description: "Experience the extraordinary with Bangalore's premier luxury supercar rental platform. Rent the Porsche 718 Cayman, Lamborghini Huracán EVO, and Ford Mustang GT V8 for Self Drive, Ride Along, Weddings, and Events.",
+  title: "Turboride Supercars Bangalore | Porsche, Lamborghini & Ferrari Drive Experience in Bengaluru, India",
+  description: "Looking for a supercar drive experience in Bengaluru (Bangalore)? Take the wheel of a Porsche 718 Cayman on the STRR highway. Zero security deposit, safety pilot guided. Book online at turboridesupercars.com!",
   keywords: [
-    "Supercar rental Bangalore",
-    "Porsche 718 Cayman rental Bangalore",
-    "Self drive supercar Bangalore",
-    "Lamborghini rental India",
-    "Luxury car hire Bangalore",
-    "Wedding car rental luxury Bangalore",
-    "Photoshoot supercar rental",
-    "TurboRide Supercars"
+    "turboride supercars bangalore",
+    "supercar experience bengaluru",
+    "rent porsche bangalore",
+    "drive supercar in bangalore",
+    "lamborghini experience bengaluru",
+    "ferrari drive bangalore",
+    "strr highway drive"
   ],
-  authors: [{ name: "TurboRide Supercars", url: "https://turboride.in" }],
+  authors: [{ name: "TurboRide Supercars", url: "https://turboridesupercars.com" }],
   creator: "TurboRide Supercars",
-  metadataBase: new URL("https://turboride.in"),
+  metadataBase: new URL("https://turboridesupercars.com"),
+  alternates: {
+    canonical: "https://turboridesupercars.com/",
+  },
+  other: {
+    language: "English",
+    "geo.region": "IN-KA",
+    "geo.placename": "Bengaluru",
+  },
   openGraph: {
-    title: "TurboRide Supercars | Drive The Extraordinary",
-    description: "World-class supercar rentals in Bangalore. Porsche 718 Cayman available now for Self Drive, Ride Along & Events.",
-    url: "https://turboride.in",
+    type: "website",
+    url: "https://turboridesupercars.com/",
+    title: "Turboride Supercars Bangalore | Porsche, Lamborghini & Ferrari Drive Experience in Bengaluru, India",
+    description: "Experience raw Porsche performance on the STRR Expressway. Zero security deposit, safety pilot guided, 4K media packages included. Reserve your slot now!",
     siteName: "TurboRide Supercars",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=85",
+        url: "https://turboridesupercars.com/assets/og-previewporsche.jpg",
         width: 1200,
         height: 630,
-        alt: "TurboRide Porsche 718 Cayman Supercar Bangalore",
+        alt: "Turboride Supercars Bangalore - Porsche 718 Cayman Drive Experience",
       },
     ],
     locale: "en_IN",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "TurboRide Supercars | Luxury Rental Bangalore",
-    description: "Rent Porsche, Lamborghini & Mustang in Bangalore. Self Drive, Ride Along, Photoshoots.",
-    images: ["https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=85"],
+    site: "@turboride9",
+    creator: "@turboride9",
+    title: "Turboride Supercars Bangalore | Porsche, Lamborghini & Ferrari Drive Experience in Bengaluru, India",
+    description: "Experience raw Porsche performance on the STRR Expressway. Zero security deposit, safety pilot guided, 4K media packages included. Reserve your slot now!",
+    images: ["https://turboridesupercars.com/assets/og-previewporsche.jpg"],
   },
   robots: {
     index: true,
     follow: true,
-  },
-  alternates: {
-    canonical: "https://turboride.in",
   },
 };
 
@@ -75,28 +81,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Structured Data (JSON-LD) for LocalBusiness & AutoRental
+  // LocalBusiness Structured Data (Schema JSON-LD)
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "AutoRental",
+    "@type": "LocalBusiness",
     "name": "TurboRide Supercars",
-    "image": "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=85",
-    "@id": "https://turboride.in",
-    "url": "https://turboride.in",
-    "telephone": "+919876543210",
-    "priceRange": "₹₹₹₹",
+    "image": "https://turboridesupercars.com/assets/og-preview-porsche.jpg",
+    "@id": "https://turboridesupercars.com",
+    "url": "https://turboridesupercars.com",
+    "telephone": "+916363935011",
+    "email": "hello@turboridesupercars.com",
+    "priceRange": "₹₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "UB City, Vittal Mallya Road",
-      "addressLocality": "Bengaluru",
+      "streetAddress": "STRR Expressway",
+      "addressLocality": "Dobaspet",
       "addressRegion": "Karnataka",
-      "postalCode": "560001",
+      "postalCode": "562111",
       "addressCountry": "IN"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 12.9716,
-      "longitude": 77.5946
+      "latitude": 13.2389,
+      "longitude": 77.2415
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -109,11 +116,11 @@ export default function RootLayout({
         "Saturday",
         "Sunday"
       ],
-      "opens": "00:00",
-      "closes": "23:59"
+      "opens": "11:00",
+      "closes": "17:00"
     },
     "sameAs": [
-      "https://instagram.com/turboride_supercars"
+      "https://www.instagram.com/turboride9"
     ]
   };
 

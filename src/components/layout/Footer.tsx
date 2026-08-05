@@ -1,4 +1,4 @@
-import { Shield, Instagram, MapPin, Phone, Mail } from "lucide-react";
+import { Shield, Instagram, MapPin, Phone, Mail, FileText } from "lucide-react";
 import Image from "next/image";
 
 interface FooterProps {
@@ -16,14 +16,19 @@ export default function Footer({}: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-16 border-b border-white/10">
           {/* Column 1: Brand Info */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-center">
-              <Image
-                src="/images/Logo-3-2048x308.png"
-                alt="TurboRide Supercars Bangalore"
-                width={220}
-                height={33}
-                className="h-9 w-auto object-contain"
-              />
+            <div className="flex flex-col space-y-2">
+              <div className="flex items-center">
+                <Image
+                  src="/images/Logo-3-2048x308.png"
+                  alt="TURBORIDESUPERCARS.COM"
+                  width={220}
+                  height={33}
+                  className="h-9 w-auto object-contain"
+                />
+              </div>
+              <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#FFD000]">
+                TURBORIDESUPERCARS.COM
+              </span>
             </div>
 
             <p className="text-neutral-400 text-sm leading-relaxed max-w-md">
@@ -32,7 +37,7 @@ export default function Footer({}: FooterProps) {
 
             <div className="flex items-center gap-3 pt-2">
               <a
-                href="https://instagram.com/turboride9"
+                href="https://www.instagram.com/turboride9"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-white/10 hover:border-[#FF2D20]/50 hover:bg-[#FF2D20]/10 text-xs font-semibold text-neutral-300 hover:text-white transition-all"
@@ -111,25 +116,52 @@ export default function Footer({}: FooterProps) {
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <div>
                   <a href="tel:+916363935011" className="text-white font-semibold hover:text-[#FF2D20] transition-colors">+91 63639 35011</a>
-                  <div className="text-[10px] text-neutral-400 mt-0.5">Call / WhatsApp (8:00 AM – 8:00 PM)</div>
+                  <div className="text-[10px] text-neutral-400 mt-0.5">Call / WhatsApp (11:00 AM – 5:00 PM)</div>
                 </div>
               </div>
 
               <div className="flex items-start gap-2">
                 <Mail className="w-4 h-4 text-[#FFD000] shrink-0 mt-0.5" />
                 <div>
-                  <a href="mailto:hello@turboride.in" className="text-white font-semibold hover:text-[#FF2D20] transition-colors">hello@turboride.in</a>
-                  <div className="text-[10px] text-neutral-400 mt-0.5">Official Desk & Media Inquiries</div>
+                  <a href="mailto:hello@turboridesupercars.com" className="text-white font-semibold hover:text-[#FF2D20] transition-colors">hello@turboridesupercars.com</a>
+                  <div className="text-[10px] text-neutral-400 mt-0.5">Official Desk & Booking Inquiries</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Legal Policies Section */}
+        <div className="py-6 border-b border-white/10 flex flex-wrap items-center justify-center gap-6 text-xs text-neutral-400">
+          <a
+            href="/privacy-policy"
+            className="hover:text-white transition-colors flex items-center gap-1.5"
+          >
+            <FileText className="w-3.5 h-3.5 text-[#FF2D20]" />
+            <span>Privacy Policy</span>
+          </a>
+          <span className="text-neutral-700">•</span>
+          <a
+            href="/refund-policy"
+            className="hover:text-white transition-colors flex items-center gap-1.5"
+          >
+            <FileText className="w-3.5 h-3.5 text-[#FFD000]" />
+            <span>Cancellation & Refund Policy</span>
+          </a>
+          <span className="text-neutral-700">•</span>
+          <a
+            href="/terms-and-conditions"
+            className="hover:text-white transition-colors flex items-center gap-1.5"
+          >
+            <FileText className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Terms & Conditions</span>
+          </a>
+        </div>
+
         {/* Bottom copyright & navigation */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
           <div className="flex items-center gap-2">
-            <span>© 2026 TurboRide Supercars Bengaluru. All rights reserved.</span>
+            <span>© 2026 TURBORIDESUPERCARS.COM. All rights reserved.</span>
           </div>
 
           <div className="flex items-center gap-6 text-neutral-400 font-medium">
