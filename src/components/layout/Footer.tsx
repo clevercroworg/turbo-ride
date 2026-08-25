@@ -122,15 +122,9 @@ export default function Footer({}: FooterProps) {
 
               <div className="flex items-start gap-2">
                 <Mail className="w-4 h-4 text-[#FFD000] shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  <div>
-                    <a href="mailto:booking@turboridesupercars.com" className="text-white font-semibold hover:text-[#FF2D20] transition-colors block">booking@turboridesupercars.com</a>
-                    <span className="text-[10px] text-neutral-400">Bookings & Reservations</span>
-                  </div>
-                  <div>
-                    <a href="mailto:hello@turboridesupercars.com" className="text-white font-semibold hover:text-[#FF2D20] transition-colors block">hello@turboridesupercars.com</a>
-                    <span className="text-[10px] text-neutral-400">General Support & Inquiries</span>
-                  </div>
+                <div>
+                  <a href="mailto:hello@turboridesupercars.com" className="text-white font-semibold hover:text-[#FF2D20] transition-colors">hello@turboridesupercars.com</a>
+                  <div className="text-[10px] text-neutral-400 mt-0.5">Official Desk & Booking Inquiries</div>
                 </div>
               </div>
             </div>
