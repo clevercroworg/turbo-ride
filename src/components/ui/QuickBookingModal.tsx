@@ -37,7 +37,14 @@ export default function QuickBookingModal({
     onClose();
   };
 
-  const bookingPortalUrl = `https://book.turboridesupercars.com/book?car=${encodeURIComponent(carId)}`;
+  const BOOKING_CAR_SLUG_MAP: Record<string, string> = {
+    "porsche-718-cayman": "porsche-718",
+    "lamborghini-huracan": "lambo-huracan",
+    "ford-mustang-gt": "mustang-gt",
+    "ferrari-488": "ferrari-488",
+  };
+  const targetCarSlug = BOOKING_CAR_SLUG_MAP[carId] || carId;
+  const bookingPortalUrl = `https://book.turboridesupercars.com/book?car=${encodeURIComponent(targetCarSlug)}`;
 
   return (
     <AnimatePresence>
