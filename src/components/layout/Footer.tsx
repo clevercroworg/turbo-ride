@@ -122,9 +122,15 @@ export default function Footer({}: FooterProps) {
 
               <div className="flex items-start gap-2">
                 <Mail className="w-4 h-4 text-[#FFD000] shrink-0 mt-0.5" />
-                <div>
-                  <a href="mailto:hello@turboridesupercars.com" className="text-white font-semibold hover:text-[#FF2D20] transition-colors">hello@turboridesupercars.com</a>
-                  <div className="text-[10px] text-neutral-400 mt-0.5">Official Desk & Booking Inquiries</div>
+                <div className="space-y-1">
+                  <div>
+                    <a href="mailto:booking@turboridesupercars.com" className="text-white font-semibold hover:text-[#FF2D20] transition-colors block">booking@turboridesupercars.com</a>
+                    <span className="text-[10px] text-neutral-400">Bookings & Reservations</span>
+                  </div>
+                  <div>
+                    <a href="mailto:hello@turboridesupercars.com" className="text-white font-semibold hover:text-[#FF2D20] transition-colors block">hello@turboridesupercars.com</a>
+                    <span className="text-[10px] text-neutral-400">General Support & Inquiries</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -156,6 +162,16 @@ export default function Footer({}: FooterProps) {
             <FileText className="w-3.5 h-3.5 text-emerald-400" />
             <span>Terms & Conditions</span>
           </a>
+          <span className="text-neutral-700">•</span>
+          <a
+            href="https://book.turboridesupercars.com/admin"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white transition-colors flex items-center gap-1.5 text-neutral-400 hover:text-white"
+          >
+            <Shield className="w-3.5 h-3.5 text-[#FFD000]" />
+            <span>Admin Portal</span>
+          </a>
         </div>
 
         {/* Bottom copyright & navigation */}
@@ -165,7 +181,7 @@ export default function Footer({}: FooterProps) {
           </div>
 
           <div className="flex items-center gap-6 text-neutral-400 font-medium">
-            <a href="https://turboride.in/ticket/book-now" className="hover:text-[#FF2D20] transition-colors">Book Drive</a>
+            <a href="https://book.turboridesupercars.com/book" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF2D20] transition-colors">Book Drive</a>
             <a href="#fleet" className="hover:text-white transition-colors">Supercar Fleet</a>
             <a href="#why-us" className="hover:text-white transition-colors">Eligibility & Safety</a>
             <a href="#faq" className="hover:text-white transition-colors">Support & FAQs</a>

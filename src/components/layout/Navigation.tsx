@@ -74,16 +74,24 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
             </nav>
 
             {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-3">
               <a
-                href="https://wa.me/919876543210?text=Hi%20TurboRide%2C%20I%20would%20like%20to%20inquire%20about%20a%20supercar%20drive%20experience%20in%20Bengaluru."
+                href="https://wa.me/916363935011?text=Hi%20TurboRide%2C%20I%20would%20like%20to%20inquire%20about%20a%20supercar%20drive%20experience%20in%20Bengaluru."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-300 hover:text-white px-4 py-2.5 rounded-lg border border-white/10 hover:border-[#25D366]/50 hover:bg-[#25D366]/10 transition-all duration-300"
+                className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-300 hover:text-white px-3.5 py-2 rounded-lg border border-white/10 hover:border-[#25D366]/50 hover:bg-[#25D366]/10 transition-all duration-300"
               >
                 <WhatsAppIcon className="w-4 h-4" />
                 <span>WhatsApp</span>
               </a>
+              <button
+                type="button"
+                onClick={() => onOpenBooking()}
+                className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-black bg-[#FF2D20] hover:bg-[#ff4d42] px-4 py-2 rounded-lg transition-all shadow-md shadow-[#FF2D20]/20"
+              >
+                <span>Book Experience</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
             </div>
 
             {/* Mobile Menu Button (No top bar Book button, shown inside burger menu) */}

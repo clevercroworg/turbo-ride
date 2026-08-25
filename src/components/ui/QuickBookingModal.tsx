@@ -32,10 +32,12 @@ export default function QuickBookingModal({
       `*Phone:* ${customerPhone || 'N/A'}%0A%0A` +
       `_Sent from TurboRide Supercars Official Website_`;
 
-    const whatsappUrl = `https://wa.me/919876543210?text=${message}`;
+    const whatsappUrl = `https://wa.me/916363935011?text=${message}`;
     window.open(whatsappUrl, "_blank");
     onClose();
   };
+
+  const bookingPortalUrl = `https://book.turboridesupercars.com/book?car=${encodeURIComponent(carId)}`;
 
   return (
     <AnimatePresence>
@@ -146,14 +148,25 @@ export default function QuickBookingModal({
                   <span>Includes Doorstep Delivery, Insured Coverage & 24/7 Concierge Support.</span>
                 </div>
 
-                {/* Submit CTA */}
-                <button
-                  type="submit"
-                  className="w-full py-4 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-[#FF2D20]/25 transition-all"
-                >
-                  <span>Submit Reservation</span>
-                  <ChevronRight className="w-5 h-5" />
-                </button>
+                {/* Action CTAs */}
+                <div className="space-y-3 pt-2">
+                  <a
+                    href={bookingPortalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-[#FF2D20] to-[#E02619] hover:from-[#e02619] hover:to-[#c41e12] text-white font-heading text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-[#FF2D20]/25 transition-all text-center"
+                  >
+                    <span>Instant Slot Booking Portal (Save 15%)</span>
+                    <ChevronRight className="w-5 h-5" />
+                  </a>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-white/15 text-white font-heading text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+                  >
+                    <span>Book via WhatsApp Concierge</span>
+                  </button>
+                </div>
               </form>
             </div>
           </motion.div>
