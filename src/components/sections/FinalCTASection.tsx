@@ -8,7 +8,7 @@ interface FinalCTASectionProps {
   onOpenBooking?: () => void;
 }
 
-export default function FinalCTASection({}: FinalCTASectionProps) {
+export default function FinalCTASection({ onOpenBooking }: FinalCTASectionProps) {
   return (
     <section className="py-12 sm:py-16 bg-[#f8f9fa] relative overflow-hidden border-t border-neutral-200">
       {/* Light Studio Background Lighting */}
@@ -37,14 +37,15 @@ export default function FinalCTASection({}: FinalCTASectionProps) {
 
           {/* Action Button Stack */}
           <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
-            <a
-              href="https://turboride.in/ticket/book-now"
-              className="px-6 py-3 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-[#FF2D20]/20 transition-all hover:scale-105"
+            <button
+              type="button"
+              onClick={() => onOpenBooking ? onOpenBooking() : window.open("https://book.turboridesupercars.com/book", "_blank")}
+              className="px-6 py-3 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-[#FF2D20]/20 transition-all hover:scale-105 cursor-pointer"
             >
               <Calendar className="w-4 h-4" />
               <span>RESERVE NOW</span>
               <ChevronRight className="w-4 h-4" />
-            </a>
+            </button>
 
             <a
               href="https://wa.me/916363935011?text=Hi%20TurboRide%2C%20I%20want%20to%20reserve%20a%20supercar%20in%20Bangalore."

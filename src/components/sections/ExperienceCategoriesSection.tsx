@@ -9,7 +9,7 @@ interface ExperienceCategoriesSectionProps {
   onOpenBooking?: () => void;
 }
 
-export default function ExperienceCategoriesSection({}: ExperienceCategoriesSectionProps) {
+export default function ExperienceCategoriesSection({ onOpenBooking }: ExperienceCategoriesSectionProps) {
   const iconMap: Record<string, React.ReactNode> = {
     Key: <Key className="w-5 h-5 text-[#FF2D20]" />,
     Flame: <Flame className="w-5 h-5 text-amber-600" />,
@@ -95,13 +95,14 @@ export default function ExperienceCategoriesSection({}: ExperienceCategoriesSect
               {/* Action Trigger */}
               <div className="pt-6 mt-6 border-t border-neutral-200">
                 {idx === 0 ? (
-                  <a
-                    href="https://turboride.in/ticket/book-now"
-                    className="w-full py-3 rounded-xl bg-black hover:bg-[#FF2D20] text-white font-heading text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-md"
+                  <button
+                    type="button"
+                    onClick={() => onOpenBooking ? onOpenBooking() : window.open("https://book.turboridesupercars.com/book", "_blank")}
+                    className="w-full py-3 rounded-xl bg-black hover:bg-[#FF2D20] text-white font-heading text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-md cursor-pointer"
                   >
                     <span>BOOK HIGHWAY DRIVE</span>
                     <ChevronRight className="w-4 h-4" />
-                  </a>
+                  </button>
                 ) : (
                   <button
                     disabled

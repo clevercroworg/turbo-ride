@@ -10,7 +10,7 @@ interface HeroSectionProps {
   onOpenBooking?: (carId?: string) => void;
 }
 
-export default function HeroSection({}: HeroSectionProps) {
+export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
   const [activeCarId, setActiveCarId] = useState("porsche-718-cayman");
   const [viewMode, setViewMode] = useState<'video' | 'exterior' | 'cockpit'>('video');
   const [isRevving, setIsRevving] = useState(false);
@@ -23,15 +23,17 @@ export default function HeroSection({}: HeroSectionProps) {
 
   // Guaranteed video autoplay for mobile & desktop browsers
   useEffect(() => {
-    if (viewMode === 'video' && videoRef.current) {
+    if (videoRef.current) {
       videoRef.current.muted = true;
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().then(() => {
-        setIsVideoPlaying(true);
-      }).catch((err) => {
-        console.warn("Video autoplay triggered:", err);
-        setIsVideoPlaying(false);
-      });
+      videoRef.current.defaultMuted = true;
+      if (viewMode === 'video') {
+        const p = videoRef.current.play();
+        if (p !== undefined) {
+          p.then(() => setIsVideoPlaying(true)).catch(() => {});
+        }
+      } else {
+        videoRef.current.pause();
+      }
     }
   }, [activeCarId, viewMode]);
 
@@ -221,49 +223,71 @@ export default function HeroSection({}: HeroSectionProps) {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-between pt-28 pb-12 overflow-hidden bg-[#050505] border-b border-white/10">
-      {/* Pure High-Definition Background Media Engine for Mobile & Desktop */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`${activeCarId}-${viewMode}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
-          className="absolute inset-0 z-0"
+      {/* High-Definition Background Media Engine (Persistent Video + Smooth Fade Image) */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Permanent Video Element — Never Unmounted */}
+        {activeCar.heroVideo && (
+          <video
+            ref={(el) => {
+              videoRef.current = el;
+              if (el) {
+                el.muted = true;
+                el.defaultMuted = true;
+                if (viewMode === 'video') {
+                  const p = el.play();
+                  if (p !== undefined) {
+                    p.then(() => setIsVideoPlaying(true)).catch(() => {});
+                  }
+                }
+              }
+            }}
+            key={activeCar.heroVideo}
+            src={activeCar.heroVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster={activeCar.image}
+            onLoadedMetadata={(e) => {
+              e.currentTarget.muted = true;
+              e.currentTarget.defaultMuted = true;
+              if (viewMode === 'video') {
+                e.currentTarget.play().then(() => setIsVideoPlaying(true)).catch(() => {});
+              }
+            }}
+            onCanPlay={(e) => {
+              if (viewMode === 'video') {
+                e.currentTarget.play().then(() => setIsVideoPlaying(true)).catch(() => {});
+              }
+            }}
+            onPlay={() => setIsVideoPlaying(true)}
+            className={`w-full h-full object-cover object-center scale-105 transition-opacity duration-700 ${
+              viewMode === 'video' ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          />
+        )}
+
+        {/* Exterior / Cockpit Image Overlay Layer */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            viewMode !== 'video' ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         >
-          {/* Universal Video View for Mobile & Desktop */}
-          {viewMode === 'video' && activeCar.heroVideo && (
-            <video
-              ref={videoRef}
-              key={activeCar.heroVideo}
-              src={activeCar.heroVideo}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-full object-cover object-center scale-105"
-            />
-          )}
+          <Image
+            src={currentImage}
+            alt={`${activeCar.name} TurboRide Bangalore`}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center scale-105"
+          />
+        </div>
 
-          {/* Exterior / Cockpit Image View */}
-          {viewMode !== 'video' && (
-            <div className="absolute inset-0">
-              <Image
-                src={currentImage}
-                alt={`${activeCar.name} TurboRide Bangalore`}
-                fill
-                priority
-                className="object-cover object-center scale-105"
-              />
-            </div>
-          )}
-
-          {/* Subtle Bottom & Side Vignette Gradient for Text Legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/40 opacity-70 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/60 via-transparent to-transparent pointer-events-none" />
-        </motion.div>
-      </AnimatePresence>
+        {/* Subtle Bottom & Side Vignette Gradient for Text Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/40 opacity-70 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/60 via-transparent to-transparent pointer-events-none" />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full my-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -329,9 +353,10 @@ export default function HeroSection({}: HeroSectionProps) {
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
               {activeCar.status === 'available' ? (
-                <a
-                  href="https://turboride.in/ticket/book-now"
-                  className="relative group overflow-hidden rounded-xl p-[1px] font-semibold text-xs sm:text-sm uppercase tracking-widest shadow-2xl inline-block"
+                <button
+                  type="button"
+                  onClick={() => onOpenBooking ? onOpenBooking(activeCarId) : window.open("https://book.turboridesupercars.com/book", "_blank")}
+                  className="relative group overflow-hidden rounded-xl p-[1px] font-semibold text-xs sm:text-sm uppercase tracking-widest shadow-2xl inline-block cursor-pointer"
                 >
                   <span
                     className="absolute inset-0 rounded-xl opacity-90 group-hover:opacity-100 transition-opacity"
@@ -343,7 +368,7 @@ export default function HeroSection({}: HeroSectionProps) {
                     <span>Book Your Drive</span>
                     <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
-                </a>
+                </button>
               ) : (
                 <button
                   disabled

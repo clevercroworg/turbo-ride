@@ -7,7 +7,7 @@ interface MobileStickyBarProps {
   onOpenBooking?: (carId?: string) => void;
 }
 
-export default function MobileStickyBar({}: MobileStickyBarProps) {
+export default function MobileStickyBar({ onOpenBooking }: MobileStickyBarProps) {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] bg-[#050505]/95 backdrop-blur-2xl border-t border-white/15 shadow-2xl shadow-black">
       <div className="grid grid-cols-2 gap-2.5 max-w-md mx-auto w-full">
@@ -23,7 +23,7 @@ export default function MobileStickyBar({}: MobileStickyBarProps) {
 
         <a
           href="https://turboride.in/ticket/book-now"
-          className="flex items-center justify-center gap-1.5 py-3 px-3 sm:px-4 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading text-[11px] sm:text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#FF2D20]/25 transition-all whitespace-nowrap active:scale-[0.98]"
+          className="flex items-center justify-center gap-1.5 py-3 px-3 sm:px-4 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading text-[11px] sm:text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#FF2D20]/25 transition-all whitespace-nowrap active:scale-[0.98] cursor-pointer"
         >
           <Calendar className="w-4 h-4 shrink-0" />
           <span>Book Drive</span>

@@ -1,4 +1,4 @@
-import { Shield, Instagram, MapPin, Phone, Mail, FileText } from "lucide-react";
+import { Shield, Instagram, MapPin, Phone, Mail, FileText, User } from "lucide-react";
 import Image from "next/image";
 
 interface FooterProps {
@@ -156,15 +156,14 @@ export default function Footer({}: FooterProps) {
             <FileText className="w-3.5 h-3.5 text-emerald-400" />
             <span>Terms & Conditions</span>
           </a>
-          <span className="text-neutral-700">•</span>
           <a
-            href="https://book.turboridesupercars.com/admin"
+            href="https://book.turboridesupercars.com/login"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition-colors flex items-center gap-1.5 text-neutral-400 hover:text-white"
           >
-            <Shield className="w-3.5 h-3.5 text-[#FFD000]" />
-            <span>Admin Portal</span>
+            <User className="w-3.5 h-3.5 text-[#FFD000]" />
+            <span>Member Login</span>
           </a>
         </div>
 
@@ -175,7 +174,7 @@ export default function Footer({}: FooterProps) {
           </div>
 
           <div className="flex items-center gap-6 text-neutral-400 font-medium">
-            <a href="https://book.turboridesupercars.com/book" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF2D20] transition-colors">Book Drive</a>
+            <a href={`${process.env.NEXT_PUBLIC_BOOKING_APP_URL || "https://bookingapp-turboride.vercel.app"}/book`} target="_blank" rel="noopener noreferrer" className="hover:text-[#FF2D20] transition-colors">Book Drive</a>
             <a href="#fleet" className="hover:text-white transition-colors">Supercar Fleet</a>
             <a href="#why-us" className="hover:text-white transition-colors">Eligibility & Safety</a>
             <a href="#faq" className="hover:text-white transition-colors">Support & FAQs</a>

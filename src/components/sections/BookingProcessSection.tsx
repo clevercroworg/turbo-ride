@@ -8,7 +8,7 @@ interface BookingProcessSectionProps {
   onOpenBooking?: () => void;
 }
 
-export default function BookingProcessSection({}: BookingProcessSectionProps) {
+export default function BookingProcessSection({ onOpenBooking }: BookingProcessSectionProps) {
   const steps = [
     {
       num: "01",
@@ -104,13 +104,14 @@ export default function BookingProcessSection({}: BookingProcessSectionProps) {
 
         {/* Call to action bar */}
         <div className="mt-12 text-center">
-          <a
-            href="https://turboride.in/ticket/book-now"
-            className="px-8 py-4 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading text-xs font-bold uppercase tracking-wider shadow-xl shadow-[#FF2D20]/25 transition-all inline-flex items-center gap-2"
+          <button
+            type="button"
+            onClick={() => onOpenBooking ? onOpenBooking() : window.open("https://book.turboridesupercars.com/book", "_blank")}
+            className="px-8 py-4 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading text-xs font-bold uppercase tracking-wider shadow-xl shadow-[#FF2D20]/25 transition-all inline-flex items-center gap-2 cursor-pointer"
           >
             <span>BOOK YOUR DRIVE NOW</span>
             <ChevronRight className="w-4 h-4" />
-          </a>
+          </button>
         </div>
       </div>
     </section>

@@ -31,9 +31,10 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
     { name: "Supercar Fleet", href: "#fleet" },
     { name: "Engine Sound", href: "#sound-experience" },
     { name: "Experiences", href: "#experiences" },
-    { name: "Safety Guidelines", href: "#why-us" },
+    { name: "Safety", href: "#why-us" },
     { name: "Reviews", href: "#reviews" },
-    { name: "Support", href: "#faq" },
+    { name: "Location", href: "#location" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -46,26 +47,26 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             {/* Official Brand Logo */}
-            <a href="#" className="flex items-center">
+            <a href="/" className="flex items-center shrink-0">
               <Image
                 src="/images/Logo-3-2048x308.png"
                 alt="TurboRide Supercars Bangalore"
                 width={204}
                 height={31}
                 priority
-                className="h-8 sm:h-9 w-auto object-contain hover:opacity-90 transition-opacity"
+                className="h-7 sm:h-8 lg:h-9 w-auto object-contain hover:opacity-90 transition-opacity"
               />
             </a>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-8 glass-pill px-6 py-2 rounded-full border border-white/10">
+            <nav className="hidden xl:flex items-center gap-5 2xl:gap-7 glass-pill px-6 py-2.5 rounded-full border border-white/10 shrink-0">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-xs uppercase tracking-widest font-medium text-neutral-300 hover:text-[#FF2D20] transition-colors duration-200 relative group py-1"
+                  className="text-xs uppercase tracking-widest font-medium text-neutral-300 hover:text-[#FF2D20] transition-colors duration-200 relative group py-1 whitespace-nowrap"
                 >
                   {link.name}
                   <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#FF2D20] group-hover:w-full transition-all duration-300" />
@@ -74,24 +75,23 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
             </nav>
 
             {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-3 shrink-0">
               <a
                 href="https://wa.me/916363935011?text=Hi%20TurboRide%2C%20I%20would%20like%20to%20inquire%20about%20a%20supercar%20drive%20experience%20in%20Bengaluru."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-300 hover:text-white px-3.5 py-2 rounded-lg border border-white/10 hover:border-[#25D366]/50 hover:bg-[#25D366]/10 transition-all duration-300"
+                className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-200 hover:text-white px-4 py-2.5 rounded-lg border border-white/15 hover:border-[#25D366]/60 hover:bg-[#25D366]/15 transition-all duration-300 whitespace-nowrap shrink-0"
               >
-                <WhatsAppIcon className="w-4 h-4" />
+                <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
                 <span>WhatsApp</span>
               </a>
-              <button
-                type="button"
-                onClick={() => onOpenBooking()}
-                className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-black bg-[#FF2D20] hover:bg-[#ff4d42] px-4 py-2 rounded-lg transition-all shadow-md shadow-[#FF2D20]/20"
+              <a
+                href="https://turboride.in/ticket/book-now"
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-black bg-[#FF2D20] hover:bg-[#ff4d42] px-5 py-2.5 rounded-lg transition-all shadow-md shadow-[#FF2D20]/25 whitespace-nowrap shrink-0"
               >
                 <span>Book Experience</span>
                 <ChevronRight className="w-3.5 h-3.5" />
-              </button>
+              </a>
             </div>
 
             {/* Mobile Menu Button (No top bar Book button, shown inside burger menu) */}
@@ -148,7 +148,7 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
 
               <div className="grid grid-cols-2 gap-3">
                 <a
-                  href="https://wa.me/919876543210?text=Hi%20TurboRide%2C%20I%20am%20interested%20in%20renting%20a%20supercar%20in%20Bangalore."
+                  href="https://wa.me/916363935011?text=Hi%20TurboRide%2C%20I%20am%20interested%20in%20a%20supercar%20drive%20experience%20in%20Bangalore."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#25D366]/20 border border-[#25D366]/40 text-[#25D366] font-heading text-xs font-bold uppercase tracking-wider"
@@ -156,15 +156,13 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
                   <WhatsAppIcon className="w-4 h-4" />
                   <span>WhatsApp</span>
                 </a>
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenBooking();
-                  }}
+                <a
+                  href="https://turboride.in/ticket/book-now"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#FF2D20] text-black font-heading text-xs font-bold uppercase tracking-wider"
                 >
                   <span>Book Now</span>
-                </button>
+                </a>
               </div>
             </div>
           </motion.div>

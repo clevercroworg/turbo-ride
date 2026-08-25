@@ -13,6 +13,7 @@ interface FeaturedFleetSectionProps {
 }
 
 export default function FeaturedFleetSection({
+  onOpenBooking,
   onOpenDetail,
 }: FeaturedFleetSectionProps) {
   const [filter, setFilter] = useState<'all' | 'available' | 'coming-soon'>('all');
@@ -190,13 +191,14 @@ export default function FeaturedFleetSection({
                   </button>
 
                   {car.status === 'available' ? (
-                    <a
-                      href="https://turboride.in/ticket/book-now"
-                      className="px-4 py-3 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-md shadow-[#FF2D20]/20 transition-all inline-flex"
+                    <button
+                      type="button"
+                      onClick={() => onOpenBooking ? onOpenBooking(car.id) : window.open("https://book.turboridesupercars.com/book", "_blank")}
+                      className="px-4 py-3 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-md shadow-[#FF2D20]/20 transition-all inline-flex cursor-pointer"
                     >
                       <span>Reserve Drive</span>
                       <ChevronRight className="w-3.5 h-3.5" />
-                    </a>
+                    </button>
                   ) : null}
                 </div>
               </div>

@@ -25,6 +25,19 @@ export default function QuickBookingModal({
   const handleWhatsAppBooking = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Asynchronously dispatch lead notification email to booking@turboridesupercars.com
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'booking',
+        name: customerName || 'Website Client',
+        phone: customerPhone || undefined,
+        carName: activeCar.name,
+        message: 'Lead submitted via Quick Booking Modal on the website.',
+      }),
+    }).catch(() => {});
+
     const message = `*NEW TURBORIDE SUPERCAR EXPERIENCE DRIVE REQUEST*%0A%0A` +
       `*Vehicle:* ${activeCar.name}%0A` +
       `*Package:* Highway Experience Drive%0A` +
@@ -44,7 +57,8 @@ export default function QuickBookingModal({
     "ferrari-488": "ferrari-488",
   };
   const targetCarSlug = BOOKING_CAR_SLUG_MAP[carId] || carId;
-  const bookingPortalUrl = `https://book.turboridesupercars.com/book?car=${encodeURIComponent(targetCarSlug)}`;
+  const BOOKING_BASE_URL = process.env.NEXT_PUBLIC_BOOKING_APP_URL || "https://bookingapp-turboride.vercel.app";
+  const bookingPortalUrl = `${BOOKING_BASE_URL}/book?car=${encodeURIComponent(targetCarSlug)}`;
 
   return (
     <AnimatePresence>

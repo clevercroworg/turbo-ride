@@ -17,6 +17,7 @@ import CustomerReviewsSection from "@/components/sections/CustomerReviewsSection
 import BookingProcessSection from "@/components/sections/BookingProcessSection";
 import RequirementsSection from "@/components/sections/RequirementsSection";
 import LocationSection from "@/components/sections/LocationSection";
+import ContactSection from "@/components/sections/ContactSection";
 import FAQSection from "@/components/sections/FAQSection";
 import FinalCTASection from "@/components/sections/FinalCTASection";
 import QuickBookingModal from "@/components/ui/QuickBookingModal";
@@ -84,7 +85,10 @@ export default function Home() {
       {/* 13. FAQ Accordion */}
       <FAQSection />
 
-      {/* 13. Final High-Conversion CTA (Dark Brembo Red Studio) */}
+      {/* 14. VIP Concierge Contact & Inquiries Form */}
+      <ContactSection />
+
+      {/* 15. Final High-Conversion CTA (Dark Brembo Red Studio) */}
       <FinalCTASection onOpenBooking={() => handleOpenBooking()} />
 
       {/* Footer */}
