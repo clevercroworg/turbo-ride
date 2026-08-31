@@ -95,14 +95,13 @@ export default function ExperienceCategoriesSection({ onOpenBooking }: Experienc
               {/* Action Trigger */}
               <div className="pt-6 mt-6 border-t border-neutral-200">
                 {idx === 0 ? (
-                  <button
-                    type="button"
-                    onClick={() => onOpenBooking ? onOpenBooking() : window.open("https://book.turboridesupercars.com/book", "_blank")}
+                  <a
+                    href="https://book.turboridesupercars.com"
                     className="w-full py-3 rounded-xl bg-black hover:bg-[#FF2D20] text-white font-heading text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-md cursor-pointer"
                   >
                     <span>BOOK HIGHWAY DRIVE</span>
                     <ChevronRight className="w-4 h-4" />
-                  </button>
+                  </a>
                 ) : (
                   <button
                     disabled

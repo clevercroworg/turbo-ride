@@ -20,18 +20,14 @@ import LocationSection from "@/components/sections/LocationSection";
 import ContactSection from "@/components/sections/ContactSection";
 import FAQSection from "@/components/sections/FAQSection";
 import FinalCTASection from "@/components/sections/FinalCTASection";
-import QuickBookingModal from "@/components/ui/QuickBookingModal";
 import CarDetailModal from "@/components/ui/CarDetailModal";
 import { Car } from "@/data/fleet";
 
 export default function Home() {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [selectedBookingCarId, setSelectedBookingCarId] = useState("porsche-718-cayman");
   const [selectedDetailCar, setSelectedDetailCar] = useState<Car | null>(null);
 
-  const handleOpenBooking = (carId?: string) => {
-    if (carId) setSelectedBookingCarId(carId);
-    setIsBookingOpen(true);
+  const handleOpenBooking = () => {
+    window.location.href = "https://book.turboridesupercars.com";
   };
 
   const handleOpenDetail = (car: Car) => {
@@ -101,12 +97,6 @@ export default function Home() {
       <WhatsAppFloatingButton />
 
       {/* Modals & Drawers */}
-      <QuickBookingModal
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
-        selectedCarId={selectedBookingCarId}
-      />
-
       <CarDetailModal
         car={selectedDetailCar}
         onClose={() => setSelectedDetailCar(null)}

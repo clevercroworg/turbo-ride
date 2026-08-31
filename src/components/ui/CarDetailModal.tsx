@@ -170,18 +170,14 @@ export default function CarDetailModal({ car, onClose, onBookCar }: CarDetailMod
                 {/* Action Buttons */}
                 <div className="pt-4 border-t border-white/10 flex items-center gap-4">
                   {car.status === 'available' ? (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        onClose();
-                        onBookCar?.(car.id);
-                      }}
+                    <a
+                      href="https://book.turboridesupercars.com"
                       className="flex-1 py-3.5 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#FF2D20]/20 transition-all text-center cursor-pointer"
                     >
                       <Calendar className="w-4 h-4" />
                       <span>Book Drive Experience</span>
                       <ChevronRight className="w-4 h-4" />
-                    </button>
+                    </a>
                   ) : (
                     <button
                       disabled

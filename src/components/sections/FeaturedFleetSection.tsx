@@ -191,14 +191,13 @@ export default function FeaturedFleetSection({
                   </button>
 
                   {car.status === 'available' ? (
-                    <button
-                      type="button"
-                      onClick={() => onOpenBooking ? onOpenBooking(car.id) : window.open("https://book.turboridesupercars.com/book", "_blank")}
+                    <a
+                      href="https://book.turboridesupercars.com"
                       className="px-4 py-3 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-md shadow-[#FF2D20]/20 transition-all inline-flex cursor-pointer"
                     >
                       <span>Reserve Drive</span>
                       <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
+                    </a>
                   ) : null}
                 </div>
               </div>

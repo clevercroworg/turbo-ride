@@ -353,9 +353,8 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
               {activeCar.status === 'available' ? (
-                <button
-                  type="button"
-                  onClick={() => onOpenBooking ? onOpenBooking(activeCarId) : window.open("https://book.turboridesupercars.com/book", "_blank")}
+                <a
+                  href="https://book.turboridesupercars.com"
                   className="relative group overflow-hidden rounded-xl p-[1px] font-semibold text-xs sm:text-sm uppercase tracking-widest shadow-2xl inline-block cursor-pointer"
                 >
                   <span
@@ -368,7 +367,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
                     <span>Book Your Drive</span>
                     <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
-                </button>
+                </a>
               ) : (
                 <button
                   disabled

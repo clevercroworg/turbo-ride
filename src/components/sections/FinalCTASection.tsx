@@ -37,15 +37,14 @@ export default function FinalCTASection({ onOpenBooking }: FinalCTASectionProps)
 
           {/* Action Button Stack */}
           <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
-            <button
-              type="button"
-              onClick={() => onOpenBooking ? onOpenBooking() : window.open("https://book.turboridesupercars.com/book", "_blank")}
+            <a
+              href="https://book.turboridesupercars.com"
               className="px-6 py-3 rounded-xl bg-[#FF2D20] hover:bg-[#e02619] text-white font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-[#FF2D20]/20 transition-all hover:scale-105 cursor-pointer"
             >
               <Calendar className="w-4 h-4" />
               <span>RESERVE NOW</span>
               <ChevronRight className="w-4 h-4" />
-            </button>
+            </a>
 
             <a
               href="https://wa.me/916363935011?text=Hi%20TurboRide%2C%20I%20want%20to%20reserve%20a%20supercar%20in%20Bangalore."
