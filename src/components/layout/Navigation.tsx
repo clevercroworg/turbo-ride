@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import { Shield, ChevronRight, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 
 interface NavigationProps {
-  onOpenBooking: (carId?: string) => void;
+  onOpenBooking?: (carId?: string) => void;
 }
 
-export default function Navigation({ onOpenBooking }: NavigationProps) {
+export default function Navigation({ onOpenBooking: _onOpenBooking }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -49,7 +50,7 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4">
             {/* Official Brand Logo */}
-            <a href="/" className="flex items-center shrink-0">
+            <Link href="/" className="flex items-center shrink-0">
               <Image
                 src="/images/Logo-3-2048x308.png"
                 alt="TurboRide Supercars Bangalore"
@@ -58,7 +59,7 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
                 priority
                 className="h-7 sm:h-8 lg:h-9 w-auto object-contain hover:opacity-90 transition-opacity"
               />
-            </a>
+            </Link>
 
             {/* Desktop Navigation Links */}
             <nav className="hidden xl:flex items-center gap-5 2xl:gap-7 glass-pill px-6 py-2.5 rounded-full border border-white/10 shrink-0">
@@ -86,7 +87,7 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
                 <span>WhatsApp</span>
               </a>
               <a
-                href="https://turboride.in/ticket/book-now"
+                href="https://book.turboridesupercars.com"
                 className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-black bg-[#FF2D20] hover:bg-[#ff4d42] px-5 py-2.5 rounded-lg transition-all shadow-md shadow-[#FF2D20]/25 whitespace-nowrap shrink-0"
               >
                 <span>Book Experience</span>
@@ -157,7 +158,7 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
                   <span>WhatsApp</span>
                 </a>
                 <a
-                  href="https://turboride.in/ticket/book-now"
+                  href="https://book.turboridesupercars.com"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#FF2D20] text-black font-heading text-xs font-bold uppercase tracking-wider"
                 >
