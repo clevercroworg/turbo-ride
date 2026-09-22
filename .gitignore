@@ -46,3 +46,7 @@ next-env.d.ts
 # nested sub-apps
 turboride-app/
 turboride-booking-app/
+
+# temporary archives and extracted scratch
+*.zip
+new page/
