@@ -48,14 +48,14 @@ The TurboRide platform is composed of three interconnected applications operatin
 
 The workspace `/Users/clevercrow/Developer/turbo-ride` contains three distinct projects with the following Git arrangements:
 
-| Project Path | Role | Git Remote / Repo | Tech Stack | Local Port (Recommended) |
+| Project Path | Role | Git Remote / Repo | Tech Stack | Production URL / Port |
 |---|---|---|---|---|
-| **`/` (Root)** | Main Brand Showcase & Marketing Site | `https://github.com/clevercroworg/turbo-ride.git` (branch `main`) | Next.js 16.3.2, React 19, Tailwind v4, Three.js / R3F, Framer Motion | `3000` |
-| **`/turboride-contest-app`** | Supercar Contest, Member Garage, Admin | Independent local Git repo (ready to link to remote) | Next.js 16.3.6, React 19.2.8, Tailwind v4, Motion, Neon PG | `3001` |
-| **`/turboride-booking-app`** | Drive Booking Wizard, Vouchers, Admin | `https://github.com/turborideclub/turboride-booking-app.git` (Ignored in root `.gitignore`) | Next.js 16 (v0 base), React 19, Tailwind, Shadcn, Neon PG, Razorpay | `3002` |
+| **`/` (Root)** | Main Brand Showcase & Marketing Site | `https://github.com/clevercroworg/turbo-ride.git` (branch `main`) | Next.js 16.3.2, React 19, Tailwind v4, Three.js / R3F, Framer Motion | `https://www.turboridesupercars.com` (Port `3000`) |
+| **`/turboride-contest-app`** | Supercar Contest, Member Garage, Admin | `https://github.com/clevercroworg/turbo-ride-contest.git` (branch `main`) | Next.js 16.3.6, React 19.2.8, Tailwind v4, Motion, Neon PG | `https://turbo-ride-contest.vercel.app` (Port `3001`) |
+| **`/turboride-booking-app`** | Drive Booking Wizard, Vouchers, Admin | `https://github.com/turborideclub/turboride-booking-app.git` (Ignored in root `.gitignore`) | Next.js 16 (v0 base), React 19, Tailwind, Shadcn, Neon PG, Razorpay | `https://book.turboridesupercars.com` (Port `3002`) |
 
 > [!NOTE]
-> Root `.gitignore` explicitly ignores `turboride-booking-app/` and `turboride-app/`. The `turboride-contest-app` is currently untracked in root git, maintaining its own `.git` repository.
+> Root `.gitignore` explicitly ignores `turboride-booking-app/` and `turboride-app/`. The `turboride-contest-app` is tracked on its dedicated GitHub repository `clevercroworg/turbo-ride-contest.git` and deployed to Vercel production at `https://turbo-ride-contest.vercel.app`.
 
 ---
 
@@ -131,19 +131,26 @@ The **"Zero Loss Guarantee" Supercar Giveaway & Member Loyalty Platform**.
 *   **2-Tier Referral Engine**:
     *   Tier 1: 25% Drive Credits commission on all referred ticket purchases.
     *   Tier 2: When a member purchases 25 tickets, they unlock **25% Cash Commission** (`is_cash_unlocked = true`), withdrawable to UPI/Bank.
+*   **Draw Cap & Regulations**: Strict 10,000 verified entries cap per draw. Full compliance with Indian Section 194B TDS regulations (30% on prizes exceeding ₹10,000) and cryptographic public seed verification.
 
 ### 4.2 Directory Tree
 ```
 turboride-contest-app/
-├── package.json               # Next.js 16.3.6, React 19.2.8, Motion, pg, canvas-confetti
+├── package.json               # Next.js 16.3.6, React 19.2.8, Motion, pg, canvas-confetti, Phosphor Icons
 ├── next.config.ts
 ├── postcss.config.mjs
 ├── .env.local                 # DATABASE_URL (Neon PostgreSQL), NEXT_PUBLIC_BOOKING_APP_URL
 ├── app/
-│   ├── layout.tsx             # Root layout & global fonts
+│   ├── layout.tsx             # Root layout with responsive viewport & themeColor: #ea580c
 │   ├── globals.css            # Dark/light luxury utility tokens
 │   ├── page.tsx               # Server component: fetches active contest & session
-│   ├── home-client.tsx        # Client orchestrator: Hero, Value Matrix, Prize Pool, etc.
+│   ├── home-client.tsx        # Client orchestrator: Hero, Entry Allocation, How It Works, etc.
+│   ├── terms/
+│   │   └── page.tsx           # Statutory Terms & Conditions (Section 194B TDS, 10,000 Cap, Buddh Delivery)
+│   ├── draw-regulations/
+│   │   └── page.tsx           # Cryptographic Seed Verification, Live Draw Protocol, Audit Logs
+│   ├── privacy/
+│   │   └── page.tsx           # Privacy Policy & Digital Personal Data Protection (DPDP) Act 2023
 │   ├── login/
 │   │   └── page.tsx           # Phone / Email passwordless garage login
 │   ├── members/
@@ -165,8 +172,11 @@ turboride-contest-app/
 │       ├── referrals/page.tsx # Referral stats & cash payout approvals
 │       └── settings/page.tsx  # Global contest configuration
 ├── components/
-│   ├── nav.tsx                # Header with live credits badge & garage link
-│   ├── hero-section.tsx       # Central stage: live ticket counter, progress, Buy CTA
+│   ├── nav.tsx                # Adaptive Contrast Navbar (Transparent at top, White on scroll)
+│   ├── hero-section.tsx       # Orange Racing Hero: Studio strip, 2-line headline, specs, Porsche render
+│   ├── entry-allocation.tsx   # Interactive Ticket Terminal: 1/5/10/25/50 presets, 100% Escrow math
+│   ├── how-it-works.tsx       # 4-step visual flow: Allocation -> 1:1 Parity -> Live Stream -> Delivery
+│   ├── porsche-specs.tsx      # Porsche 718 Cayman technical specifications deep dive
 │   ├── ticket-checkout-modal.tsx # Ticket purchase modal (Guest or Logged in)
 │   ├── value-matrix.tsx       # Editorial breakdown of Zero-Loss Guarantee
 │   ├── fleet-showcase.tsx     # Supercars available to drive via credits
@@ -174,7 +184,7 @@ turboride-contest-app/
 │   ├── referral-engine.tsx    # Interactive earning calculator & explanation
 │   ├── interactive-calculator.tsx # Dynamic ticket-to-credits simulator
 │   ├── faq-accordion.tsx      # Comprehensive contest FAQs
-│   └── footer.tsx             # Legal disclaimers & footer navigation
+│   └── footer.tsx             # Legal disclaimers & statutory links (/terms, /draw-regulations, /privacy)
 └── lib/
     ├── db.ts                  # PostgreSQL Pool connecting to shared Neon DB
     ├── types.ts               # Contest, ContestTicket, MemberSession, RewardItem, etc.
@@ -187,7 +197,32 @@ turboride-contest-app/
     └── admin.ts               # Admin Server Actions: payouts, statuses, contest crud
 ```
 
-### 4.3 Key Server Actions & Workflows
+### 4.3 UI & Responsive Design System
+*   **Aesthetic Constraint**: Industrial-brutalist supercar aesthetic with sharp edges (`rounded-none`). No generic AI pill borders.
+*   **Palette**: High-contrast Brand Racing Orange (`#ea580c`), Jet Black (`text-zinc-950` / `bg-zinc-950`), and Crisp Studio White (`#ffffff`).
+*   **Headline Typography Rules**:
+    *   Strict **2-line layout** with `<span className="block whitespace-nowrap">`.
+    *   Line 1: `WIN A PORSCHE 718`
+    *   Line 2: `CAYMAN FOR ₹1,000.`
+    *   **Scaling Formula**: Mobile strictly locked at **+17%** over original baseline using CSS clamp: `text-[clamp(27px,8.4vw,36.3px)]`. The 27px floor ensures 100% overflow immunity on 320px screens (iPhone 5/SE).
+    *   **Breakpoints**:
+        *   Mobile (< 640px): `text-[clamp(27px,8.4vw,36.3px)]`
+        *   Phablets (640px–767px): `sm:text-[38px]`
+        *   Tablet Portrait (`md:` 768px–1023px, single column 672px max): `md:text-[44px]`
+        *   Tablet Landscape (`lg:` 1024px–1279px, dual column 464px each): `lg:text-[36px]` (prevents wrapping or column overflow)
+        *   Desktop (`xl:` 1280px+): `xl:text-[48px] 2xl:text-[52px]`
+*   **Adaptive Navbar (`components/nav.tsx`)**:
+    *   Top position (`scrollY <= 20`): `bg-transparent border-none`, white/black logo, white links, solid jet black button.
+    *   Scrolled position (`scrollY > 20`): `bg-white/95 backdrop-blur-md border-b border-zinc-200 shadow-xs`, black/orange logo, orange button.
+    *   Ultra-small screens (320px–360px): `px-3.5`, responsive logo `text-base xs:text-lg sm:text-xl md:text-2xl`, button `px-2.5 xs:px-3 text-[11px] xs:text-xs`.
+*   **Bottom Delivery & Cash Option Bar**:
+    *   Left: Buddh Circuit Delivery (`text-xs xs:text-[13px] sm:text-sm font-black`) with gauge icon (`size={16}`).
+    *   Right: `₹75 Lakh Cash Option` badge (`text-xs xs:text-[13px] sm:text-sm font-black bg-zinc-950 text-white`).
+*   **Entry Allocation Terminal (`components/entry-allocation.tsx`)**:
+    *   Padding tuned for 320px screens (`p-3.5 xs:p-4 sm:p-7`).
+    *   Width symmetrically aligned on tablet portrait (`md:max-w-2xl`) to match Specs and Car containers.
+
+### 4.4 Key Server Actions & Workflows
 1.  **Ticket Purchase (`buyContestTicketsAction`)**:
     *   Inserts record into `contest_orders` with status `'completed'`.
     *   Deposits 1:1 drive credits into `user_credits` table with `pack_id = 'contest_<contestId>'`.
