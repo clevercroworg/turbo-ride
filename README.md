@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TurboRide Supercars Ecosystem
 
-## Getting Started
+Comprehensive multi-project platform for **TurboRide Supercars**: luxury supercar marketing showcase, the "Zero Loss Guarantee" supercar giveaway contest platform, and the live track/expressway booking engine.
 
-First, run the development server:
+---
+
+## 📖 Complete Architecture & System Documentation
+
+For full details on project architecture, cross-application wirings, routes, shared Neon PostgreSQL database schemas, and operational runbooks, see:
+
+👉 **[`PROJECT_STRUCTURE.md`](./PROJECT_STRUCTURE.md)**
+
+---
+
+## 🚗 Applications in this Workspace
+
+| Project | Location | Description | Port | Production URL |
+|---|---|---|---|---|
+| **TurboRide Showcase** | Root (`/`) | Brand landing page, 3D experience, acoustic engine simulator | `3000` | `https://www.turboridesupercars.com` |
+| **TurboRide Contest App** | `turboride-contest-app/` | Zero-loss giveaway, 1:1 Drive Credits, 5-digit lucky ticket pick, 2-tier referral engine, Superadmin suite | `3001` | *Contest Subdomain / Standalone* |
+| **TurboRide Booking App** | `turboride-booking-app/` | Drive booking engine, lap/slot picker, vouchers, Razorpay checkout, Admin portal | `3002` | `https://book.turboridesupercars.com` |
+
+---
+
+## ⚡ Quick Start
 
 ```bash
+# 1. Start Main Showcase (Port 3000)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 2. Start Contest App (Port 3001)
+cd turboride-contest-app && npm run dev -- -p 3001
+
+# 3. Start Booking Engine (Port 3002)
+cd turboride-booking-app && npm run dev -- -p 3002
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🗄️ Shared Database (Neon PostgreSQL)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Both `turboride-contest-app` and `turboride-booking-app` share the same Neon PostgreSQL database (`user_credits`, `credit_transactions`, `contests`, `contest_tickets`, `referral_profiles`, `bookings`, etc.).
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Refer to **[`PROJECT_STRUCTURE.md`](./PROJECT_STRUCTURE.md)** for full table definitions and cross-app credit redemption protocols.
