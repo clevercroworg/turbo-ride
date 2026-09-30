@@ -179,10 +179,11 @@ turboride-contest-app/
 │   ├── porsche-specs.tsx      # Porsche 718 Cayman technical specifications deep dive
 │   ├── ticket-checkout-modal.tsx # Ticket purchase modal (Guest or Logged in)
 │   ├── value-matrix.tsx       # Editorial breakdown of Zero-Loss Guarantee
-│   ├── fleet-showcase.tsx     # Supercars available to drive via credits
+│   ├── credit-calculator.tsx  # Interactive 4-Tier Credit Experience Slider (Photoshoot, Reel, Huracán, 4 Cars)
+│   ├── fleet-showcase.tsx     # Supercars available to drive via credits (Auto-Carousel on Mobile)
 │   ├── prize-pool.tsx         # 1st (Supercar), 2nd (Gold), 3rd (TurboRide Experience)
 │   ├── referral-engine.tsx    # Interactive earning calculator & explanation
-│   ├── interactive-calculator.tsx # Dynamic ticket-to-credits simulator
+│   ├── interactive-calculator.tsx # Legacy ticket-to-credits simulator
 │   ├── faq-accordion.tsx      # Comprehensive contest FAQs
 │   └── footer.tsx             # Legal disclaimers & statutory links (/terms, /draw-regulations, /privacy)
 └── lib/
@@ -364,7 +365,26 @@ Across all pages and components, spacing adheres to a disciplined rhythmic scale
 - **`/draw-regulations`**: Cryptographic public seed audit protocol, verified live-stream draw procedures, and audit log inspection.
 - **`/privacy`**: Digital Personal Data Protection (DPDP) Act 2023 compliance, data retention, and consent management.
 
-#### 4.3.13 Comprehensive Responsive Breakpoint Matrix
+#### 4.3.13 Interactive Credit Calculator ("WHAT YOUR CREDITS GET YOU")
+- **Component**: `components/credit-calculator.tsx`.
+- **Purpose**: Demonstrates the 100% money-back guarantee by showing users exactly what tangible track and studio experiences their credits redeem for.
+- **Card Proportions**: Constrained to `max-w-[620px]` with `rounded-2xl`, 16:9 media aspect ratio, and balanced desktop/mobile padding (`p-4 sm:p-5`) to avoid dominating the viewport while matching the reference design.
+- **4 Stepped Tiers**:
+  - `1,000 Credits` (1 Ticket · ₹1,000): Supercar Photoshoot (5 HD retouched photos posing with a supercar in studio).
+  - `2,000 Credits` (2 Tickets · ₹2,000): 30-Second Instagram Reel (cinematic 4K reel with drone & cockpit footage).
+  - `25,000 Credits` (25 Tickets · ₹25,000): Lamborghini Huracán Drive (5 adrenaline laps on Buddh Circuit).
+  - `1,00,000 Credits` (100 Tickets · ₹1,00,000): All 4 Supercars (Quad split view: Huracán, 488 GTB, 720S, 911 GT3).
+- **Tactile Stepped Range Slider**: Custom draggable thumb with smooth animated progress bar, direct step click targets, and 1-click checkout trigger (`onBuyTickets`).
+
+#### 4.3.14 Fleet Showcase Mobile Carousel with Viewport-Isolated Scrolling
+- **Component**: `components/fleet-showcase.tsx`.
+- **Desktop Layout**: Unchanged clean 3-column grid (`hidden md:grid`).
+- **Mobile Layout**: Smooth horizontal snapping carousel (`md:hidden flex overflow-x-auto snap-x snap-mandatory`) cutting vertical page scroll height by ~80%.
+- **Anti-Jump Viewport Isolation**:
+  - Auto-advance timer only executes when the carousel is actively visible in the user's viewport via an `IntersectionObserver`.
+  - Replaced browser window-level `scrollIntoView()` with container-scoped `container.scrollTo({ left: targetLeft, behavior: 'smooth' })`, preventing any unwanted pulling or jumping when the user is viewing upper or lower sections.
+
+#### 4.3.15 Comprehensive Responsive Breakpoint Matrix
 | Breakpoint | Screen Width | Hero Layout | Headline Size | Car Stage | Navigation Bar | Subtitle Margins |
 |---|---|---|---|---|---|---|
 | **Mobile XS** | 320px–374px | Single col, `pt-28 pb-12` | `clamp(27px, 8.4vw, 36.3px)` | `max-w-[420px]` | Compact logo, 3-blade menu | `px-4` side padding |
