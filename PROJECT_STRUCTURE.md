@@ -328,11 +328,20 @@ Across all pages and components, spacing adheres to a disciplined rhythmic scale
 #### 4.3.8 Entry Allocation Terminal
 - **Component**: `components/entry-allocation.tsx`.
 - **Card Styling**: `bg-white border-2 border-zinc-950 shadow-2xl p-3.5 xs:p-4 sm:p-7`.
+- **Direct Accessibility**: Permanently open and directly accessible across both mobile and desktop (no expandable accordion toggles or collapse buttons).
 - **Preset Buttons**: 1, 5, 10 (Popular), 25 (+Cash), 50 (VIP Club) with responsive text `text-sm xs:text-base sm:text-xl` and subtitle `text-[9px] xs:text-[10px] sm:text-xs`.
 - **Tablet Alignment**: Card wrapper constrained to `max-w-xl md:max-w-2xl lg:max-w-xl mx-auto` so it symmetrically matches the 672px width of the Hero specs and car containers on iPad viewports.
 - **Escrow Math Box**: Prominent green guarantee card showcasing 100% Capital Returned in Drive Credits with live recalculation on preset change.
 
-#### 4.3.9 Supercar Cockpit Drawer & Member Dashboard UI
+#### 4.3.9 Typographic Hierarchy & Contrast Tuning
+- **Value Matrix (`components/value-matrix.tsx`)**:
+  - `1 Ticket`, `10 Tickets`, `50 Tickets`, `100 Tickets` are rendered bold (`font-black text-zinc-950`) with green credit values (`font-black text-emerald-600`).
+  - Sub-items `₹1,000` / `₹10,000` and `1 Draw Entry` / `10 Draw Entries` are calibrated to unbold (`font-medium text-zinc-600` and `font-medium text-[#ea580c]`) to avoid visual bloat while maintaining exact font sizes.
+- **Porsche Specs & Vehicle Passport (`components/prize-pool.tsx` & `components/porsche-specs.tsx`)**:
+  - 4-Stat Performance Grid (`Engine`, `Horsepower`, `0-100 km/h`, `Top Speed`) uses unbold labels (`font-medium text-zinc-500 uppercase`) with high-impact bold values below (`font-black text-zinc-950 text-sm sm:text-base lg:text-lg`).
+  - Vehicle Passport accordion labels (`Engine`, `Transmission`, `Configuration`, etc.) use unbold `font-medium text-zinc-500` contrasting against the bold spec values.
+
+#### 4.3.10 Supercar Cockpit Drawer & Member Dashboard UI
 - **Member Garage (`app/members/member-dashboard-client.tsx`)**:
   - 53KB industrial-brutalist cockpit.
   - Telemetry summary bar: Total tickets, unassigned tickets, active credits balance, and cash commission earnings.
@@ -342,7 +351,7 @@ Across all pages and components, spacing adheres to a disciplined rhythmic scale
   - Supercar redemption cards: Porsche Cayman, Lamborghini Huracán, Ferrari 488 GTB, McLaren 720S, and 4K Drone Reels.
   - Instant credit debit workflow with real-time balance check and booking engine handoff.
 
-#### 4.3.10 Superadmin Console UI Architecture
+#### 4.3.11 Superadmin Console UI Architecture
 - **Console (`app/admin/admin-console-client.tsx`)**:
   - 103KB complete administrative command center.
   - KPI Telemetry Cards: Gross Ticket Revenue, Total Credits Issued, Tickets Sold, Cash Payable.
@@ -350,12 +359,12 @@ Across all pages and components, spacing adheres to a disciplined rhythmic scale
   - Orders & Ledger: Real-time ticket order stream, customer lookup, and refund handling.
   - Referral Payouts: Approval pipeline for member cash commission claims with UPI ID and bank verification.
 
-#### 4.3.11 Dedicated Statutory Legal Pages
+#### 4.3.12 Dedicated Statutory Legal Pages
 - **`/terms`**: Complete terms governing Section 194B TDS (30% flat on winnings exceeding ₹10,000), 10,000 verified entries cap, Buddh International Circuit delivery, and ₹75 Lakh direct wire cash alternative.
 - **`/draw-regulations`**: Cryptographic public seed audit protocol, verified live-stream draw procedures, and audit log inspection.
 - **`/privacy`**: Digital Personal Data Protection (DPDP) Act 2023 compliance, data retention, and consent management.
 
-#### 4.3.12 Comprehensive Responsive Breakpoint Matrix
+#### 4.3.13 Comprehensive Responsive Breakpoint Matrix
 | Breakpoint | Screen Width | Hero Layout | Headline Size | Car Stage | Navigation Bar | Subtitle Margins |
 |---|---|---|---|---|---|---|
 | **Mobile XS** | 320px–374px | Single col, `pt-28 pb-12` | `clamp(27px, 8.4vw, 36.3px)` | `max-w-[420px]` | Compact logo, 3-blade menu | `px-4` side padding |
