@@ -384,7 +384,17 @@ Across all pages and components, spacing adheres to a disciplined rhythmic scale
   - Auto-advance timer only executes when the carousel is actively visible in the user's viewport via an `IntersectionObserver`.
   - Replaced browser window-level `scrollIntoView()` with container-scoped `container.scrollTo({ left: targetLeft, behavior: 'smooth' })`, preventing any unwanted pulling or jumping when the user is viewing upper or lower sections.
 
-#### 4.3.15 Comprehensive Responsive Breakpoint Matrix
+#### 4.3.15 Custom Favicon Suite & OpenGraph / Twitter Metadata
+- **Favicon Suite**:
+  - `app/icon.svg` & `public/icon.svg`: Infinitely scalable SVG vector icon featuring the racing orange (`#ea580c`) squircle, deep asphalt (`#09090b`) core, and bold geometric "TR" monogram with an aerodynamic speed notch.
+  - `app/apple-icon.png` & `public/apple-touch-icon.png`: 180×180 high-resolution icon for iOS Safari home screen bookmarks and touch devices.
+  - `app/favicon.ico` & `public/favicon.ico`: Multi-resolution Windows/browser tab icon (16×16, 32×32, 48×48, 64×64).
+- **Social Sharing OpenGraph & Twitter**:
+  - `public/og-image.png`: 1200×630 high-resolution card featuring the yellow Porsche 718 Cayman, "WIN A PORSCHE 718 CAYMAN" headline, and 100% Capital Returned guarantee badge for rich link previews on WhatsApp, Telegram, iMessage, X/Twitter, and LinkedIn.
+- **Root Layout (`app/layout.tsx`)**:
+  - Explicit `metadataBase`, canonical URLs, localized keywords, authors, publishers, and Googlebot crawling directives.
+
+#### 4.3.16 Comprehensive Responsive Breakpoint Matrix
 | Breakpoint | Screen Width | Hero Layout | Headline Size | Car Stage | Navigation Bar | Subtitle Margins |
 |---|---|---|---|---|---|---|
 | **Mobile XS** | 320px–374px | Single col, `pt-28 pb-12` | `clamp(27px, 8.4vw, 36.3px)` | `max-w-[420px]` | Compact logo, 3-blade menu | `px-4` side padding |
