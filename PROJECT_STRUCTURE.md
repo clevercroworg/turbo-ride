@@ -139,12 +139,13 @@ turboride-contest-app/
 ├── package.json               # Next.js 16.3.6, React 19.2.8, Motion, pg, canvas-confetti, Phosphor Icons
 ├── next.config.ts
 ├── postcss.config.mjs
-├── .env.local                 # DATABASE_URL (Neon PostgreSQL), NEXT_PUBLIC_BOOKING_APP_URL
+├── .env.local                 # DATABASE_URL (Neon PostgreSQL), NEXT_PUBLIC_BOOKING_APP_URL, RAZORPAY keys
 ├── app/
 │   ├── layout.tsx             # Root layout with responsive viewport & themeColor: #ea580c
 │   ├── globals.css            # Dark/light luxury utility tokens
 │   ├── page.tsx               # Server component: fetches active contest & session
 │   ├── home-client.tsx        # Client orchestrator: Hero, Entry Allocation, How It Works, etc.
+│   ├── r/[code]/page.tsx      # Live referral entry: drops 30-day tracking cookie and redirects to /?ref=[code]
 │   ├── terms/
 │   │   └── page.tsx           # Statutory Terms & Conditions (Section 194B TDS, 10,000 Cap, Buddh Delivery)
 │   ├── draw-regulations/
@@ -155,16 +156,22 @@ turboride-contest-app/
 │   │   └── page.tsx           # Phone / Email passwordless garage login
 │   ├── members/
 │   │   ├── page.tsx           # Server component: checks session, ticket stats, referrals
-│   │   ├── member-dashboard-client.tsx # 53KB interactive Member Garage:
-│   │   │                      # - Ticket numbers management (manual & auto-pick)
-│   │   │                      # - Drive Credits wallet
-│   │   │                      # - Referral code generator, stats & payout requests
+│   │   ├── member-dashboard-client.tsx # Dynamic Member Garage:
+│   │   │                      # - Database-driven supercar showcase (no mock cars)
+│   │   │                      # - Live Razorpay Test Mode checkout
+│   │   │                      # - 5-digit number allocation (manual & auto-pick)
+│   │   │                      # - Drive Credits wallet & real-time transaction ledger
+│   │   │                      # - Live referral affiliate links, stats & payout requests
+│   │   │                      # - Embedded YouTube video showcase modal
+│   │   ├── profile/page.tsx   # Persistent profile editor (name, phone, UPI ID, bank account)
+│   │   ├── transactions/page.tsx # Filterable transaction history (Tickets, Entries, Referrals, Wallet)
+│   │   ├── support/page.tsx   # Member priority concierge support
 │   │   └── rewards/
-│   │       ├── page.tsx       # Server component: loads rewards catalog & user credits
-│   │       └── rewards-client.tsx # Catalog UI with instant redemption actions
+│   │       ├── page.tsx       # Server component: loads rewards fleet & user credits
+│   │       └── rewards-client.tsx # Direct credit redemption to booking engine (no vouchers or escrow clutter)
 │   └── admin/
 │       ├── page.tsx           # Server component loading overview metrics
-│       ├── admin-console-client.tsx # 103KB Full Superadmin Management Suite
+│       ├── admin-console-client.tsx # 105KB Full Superadmin Management Suite (with 4 Gallery Images + 1 Video URL per contest)
 │       ├── contests/page.tsx  # Contest lifecycle manager
 │       ├── members/page.tsx   # Member registry & KYC
 │       ├── orders/page.tsx    # Order payments ledger
@@ -177,7 +184,7 @@ turboride-contest-app/
 │   ├── entry-allocation.tsx   # Interactive Ticket Terminal: 1/5/10/25/50 presets, 100% Escrow math
 │   ├── how-it-works.tsx       # 4-step visual flow: Allocation -> 1:1 Parity -> Live Stream -> Delivery
 │   ├── porsche-specs.tsx      # Porsche 718 Cayman technical specifications deep dive
-│   ├── ticket-checkout-modal.tsx # Ticket purchase modal (Guest or Logged in)
+│   ├── ticket-checkout-modal.tsx # Live Razorpay Test Mode ticket checkout modal
 │   ├── value-matrix.tsx       # Editorial breakdown of Zero-Loss Guarantee
 │   ├── credit-calculator.tsx  # Interactive 4-Tier Credit Experience Slider (Photoshoot, Reel, Huracán, 4 Cars)
 │   ├── fleet-showcase.tsx     # Supercars available to drive via credits (Auto-Carousel on Mobile)
@@ -185,17 +192,20 @@ turboride-contest-app/
 │   ├── referral-engine.tsx    # Interactive earning calculator & explanation
 │   ├── interactive-calculator.tsx # Legacy ticket-to-credits simulator
 │   ├── faq-accordion.tsx      # Comprehensive contest FAQs
+│   ├── members/
+│   │   └── members-header.tsx # Unified members header with pulsing credits pill & dropdown
 │   └── footer.tsx             # Legal disclaimers & statutory links (/terms, /draw-regulations, /privacy)
 └── lib/
     ├── db.ts                  # PostgreSQL Pool connecting to shared Neon DB
     ├── types.ts               # Contest, ContestTicket, MemberSession, RewardItem, etc.
     ├── catalog.ts             # Static reward items (Lambo, Ferrari, McLaren, Photoshoot)
     ├── auth.ts                # Cookie-based member session (`turboride_member_session`)
+    ├── razorpay.ts            # Live Razorpay Test Mode order creation & signature verification
     ├── contests.ts            # Queries: getContests, getActiveContest, getUserTickets
     ├── credits.ts             # Actions: buyContestTicketsAction, assignTicketNumberAction,
-    │                          #          autoPickTicketNumberAction, simulateReferralAction
-    ├── rewards.ts             # Action: redeemRewardAction (atomic credit debit & booking redirect)
-    └── admin.ts               # Admin Server Actions: payouts, statuses, contest crud
+    │                          #          autoPickTicketNumberAction, cookie-based referral resolution
+    ├── rewards.ts             # Direct booking navigation & rewards helpers
+    └── admin.ts               # Admin Server Actions: payouts, statuses, contest CRUD with gallery & video URLs
 ```
 
 ### 4.3 Comprehensive UI, Spacing, Structural Constraints & Design System
@@ -344,19 +354,22 @@ Across all pages and components, spacing adheres to a disciplined rhythmic scale
 
 #### 4.3.10 Supercar Cockpit Drawer & Member Dashboard UI
 - **Member Garage (`app/members/member-dashboard-client.tsx`)**:
-  - 53KB industrial-brutalist cockpit.
+  - Dynamic supercar showcase populated solely from live database contests (no hardcoded mock cars).
+  - High-performance YouTube video showcase modal for cinematic reels and exhaust previews.
+  - Razorpay Test Mode checkout integration for live ticket purchases with instant ticket and credit settlement.
   - Telemetry summary bar: Total tickets, unassigned tickets, active credits balance, and cash commission earnings.
   - Number Allocation Console: High-speed 5-digit lucky number keypad with auto-pick generator and live duplicate check.
-  - Affiliate Center: Copyable referral link, dynamic QR code, and withdrawal modal for unlocked cash commissions.
+  - Affiliate Center: Live referral link (`win.turboridesupercars.com/r/[code]`), 30-day tracking cookie attribution, and withdrawal modal for unlocked cash commissions.
 - **Rewards Garage (`app/members/rewards/rewards-client.tsx`)**:
-  - Supercar redemption cards: Porsche Cayman, Lamborghini Huracán, Ferrari 488 GTB, McLaren 720S, and 4K Drone Reels.
-  - Instant credit debit workflow with real-time balance check and booking engine handoff.
+  - Direct credit redemption: Clean "Redeem" action taking the member directly to `book.turboridesupercars.com/experience` with pre-filled profile parameters.
+  - Zero-voucher simplicity: Avoids unnecessary intermediate voucher codes or escrow complexity; credits in `user_credits` are directly recognized at booking checkout.
 
 #### 4.3.11 Superadmin Console UI Architecture
 - **Console (`app/admin/admin-console-client.tsx`)**:
-  - 103KB complete administrative command center.
+  - 105KB complete administrative command center.
   - KPI Telemetry Cards: Gross Ticket Revenue, Total Credits Issued, Tickets Sold, Cash Payable.
   - Contests Manager: Draw date configuration, status toggle (Active, Concluded, Draft), winning ticket declaration.
+  - Media Controls: Direct inputs for 4 gallery image URLs and 1 YouTube video URL per contest, saved directly into Neon DB `contests`.
   - Orders & Ledger: Real-time ticket order stream, customer lookup, and refund handling.
   - Referral Payouts: Approval pipeline for member cash commission claims with UPI ID and bank verification.
 
@@ -407,26 +420,25 @@ Across all pages and components, spacing adheres to a disciplined rhythmic scale
 | **Ultra-Wide (`2xl:`)** | 1536px+ | Dual col (640px+/col) | `52px` | `max-w-[840px]` | Full desktop links + CTA | `sm:px-0` |
 
 ### 4.4 Key Server Actions & Workflows
-1.  **Ticket Purchase (`buyContestTicketsAction`)**:
-    *   Inserts record into `contest_orders` with status `'completed'`.
-    *   Deposits 1:1 drive credits into `user_credits` table with `pack_id = 'contest_<contestId>'`.
-    *   Updates `contests.sold_tickets`.
-    *   Updates `referral_profiles.tickets_bought` (unlocks cash commission at >= 25 tickets).
-    *   If a referral code was used, awards 25% bonus credits (and cash commission if unlocked).
-2.  **Number Allocation (`assignTicketNumberAction`)**:
+1.  **Razorpay Test Mode Order Creation & Checkout (`createRazorpayOrderAction` & `verifyAndCompleteRazorpayPaymentAction`)**:
+    *   `createRazorpayOrderAction`: Generates an official order on Razorpay `/v1/orders` using server-side keys (`RAZORPAY_KEY_ID` & `RAZORPAY_KEY_SECRET`), specifying the currency (`INR`), amount in paise, and receipt identifier.
+    *   `verifyAndCompleteRazorpayPaymentAction`: Authenticates the payment signature (`razorpay_order_id`, `razorpay_payment_id`, `razorpay_signature`) using HMAC SHA-256. Upon verification, records the transaction in `contest_orders`, assigns tickets into `contest_tickets`, increments `contests.sold_tickets`, deposits 1:1 drive credits into `user_credits`, and auto-settles referral commissions if a valid referral code was captured.
+2.  **30-Day Referral Cookie Attribution**:
+    *   When a guest navigates to `/r/[code]`, `app/r/[code]/page.tsx` sets an `HttpOnly`/client-readable 30-day cookie (`referral_code`) and redirects seamlessly to `/?ref=[code]`.
+    *   During guest or member checkout, `buyContestTicketsAction` and `verifyAndCompleteRazorpayPaymentAction` automatically resolve the referral code from the cookie if not explicitly supplied in the payload.
+    *   Awards 25% Drive Credits bonus to the referrer (and 25% cash commission if the referrer has unlocked cash tier by holding 25+ purchased tickets).
+3.  **Number Allocation (`assignTicketNumberAction`)**:
     *   Verifies user has unassigned tickets (`totalBought - totalAssigned > 0`).
     *   Validates 5-digit format (`/^\d{5}$/`).
     *   Guarantees ticket number uniqueness via database check & unique index.
     *   Inserts into `contest_tickets`.
-3.  **Reward Redemption (`redeemRewardAction`)**:
-    *   Acquires row-level locks on user's active credit rows in `user_credits` (`FOR UPDATE`).
-    *   Verifies total active credits balance >= required credits.
-    *   Sequentially deducts credits across active packs.
-    *   Logs transaction to `credit_transactions` and `reward_redemptions`.
-    *   Generates a seamless redirect URL to the booking app:
-        ```ts
-        const redirectUrl = `${bookingBase}/checkout?redemption=${redemptionId}&reward=${reward.id}&credits=${reward.creditsRequired}&email=${cleanEmail}&car=${reward.bookingCarId}&laps=${reward.bookingLaps}`;
+4.  **Direct Drive Credits Redemption (`getBookingLink`)**:
+    *   Completely eliminates intermediate escrow vouchers or coupon codes.
+    *   Clicking "Redeem" routes members directly to:
         ```
+        https://book.turboridesupercars.com/experience?email={email}&phone={phone}&car={carTitle}
+        ```
+    *   Because both applications query the shared Neon PostgreSQL `user_credits` table by customer email/phone, the user's credits balance is immediately visible and applied directly at booking checkout.
 
 ---
 
@@ -472,33 +484,35 @@ Both the **Contest App** and the **Booking App** connect directly to the same **
 ├────────────────────────────────┤         ├────────────────────────────────┤
 │ id (PK: text)                  │         │ id (PK: text)                  │
 │ title, subtitle, car_name      │         │ identifier (email or phone)    │◄─── Shared across
-│ image_url, worth_display       │         │ pack_id                        │     Contest App
-│ target_tickets, sold_tickets   │         │ amount_paid, credits_granted   │     and Booking App
-│ ticket_price, credits_per_tkt  │         │ credits_remaining              │
-│ status, draw_date, winner_*    │         │ status, payment_id, gateway    │
-└───────────────┬────────────────┘         └───────────────┬────────────────┘
-                │                                          │
-                ▼                                          ▼
-┌────────────────────────────────┐         ┌────────────────────────────────┐
-│        contest_tickets         │         │      credit_transactions       │
-├────────────────────────────────┤         ├────────────────────────────────┤
-│ id (PK: text)                  │         │ id (PK: text)                  │
-│ contest_id (FK -> contests.id) │         │ credit_id (FK -> user_credits) │
-│ user_phone, user_email         │         │ identifier, amount_debited     │
-│ user_name, ticket_number (UNIQ)│         │ balance_after, description     │
-│ order_id, created_at           │         │ booking_ref, created_at        │
-└────────────────────────────────┘         └────────────────────────────────┘
-                ▲                                          ▲
-                │                                          │
-┌────────────────────────────────┐         ┌────────────────────────────────┐
-│         contest_orders         │         │       reward_redemptions       │
-├────────────────────────────────┤         ├────────────────────────────────┤
-│ id (PK: text)                  │         │ id (PK: text)                  │
-│ user_phone, user_email         │         │ user_phone, user_email         │
-│ contest_id, ticket_count       │         │ reward_id, reward_title        │
-│ amount_paid, credits_issued    │         │ credits_spent, status          │
-│ referral_code_used, status     │         │ created_at                     │
-└────────────────────────────────┘         └────────────────────────────────┘
+│ image_url, gallery_images(JSONB│         │ pack_id                        │     Contest App
+│ youtube_url (TEXT), worth_disp │         │ amount_paid, credits_granted   │     and Booking App
+│ target_tickets, sold_tickets   │         │ credits_remaining              │
+│ ticket_price, credits_per_tkt  │         │ status, payment_id, gateway    │
+│ status, draw_date, winner_*    │         └───────────────┬────────────────┘
+└───────────────┬────────────────┘                         │
+                │                                          ▼
+                ▼                          ┌────────────────────────────────┐
+┌────────────────────────────────┐         │      credit_transactions       │
+│        contest_tickets         │         ├────────────────────────────────┤
+├────────────────────────────────┤         │ id (PK: text)                  │
+│ id (PK: text)                  │         │ credit_id (FK -> user_credits) │
+│ contest_id (FK -> contests.id) │         │ identifier, amount_debited     │
+│ user_phone, user_email         │         │ balance_after, description     │
+│ user_name, ticket_number (UNIQ)│         │ booking_ref, created_at        │
+│ order_id, created_at           │         └────────────────────────────────┘
+└────────────────────────────────┘                         ▲
+                ▲                                          │
+                │                          ┌────────────────────────────────┐
+┌────────────────────────────────┐         │       reward_redemptions       │
+│         contest_orders         │         ├────────────────────────────────┤
+├────────────────────────────────┤         │ id (PK: text)                  │
+│ id (PK: text)                  │         │ user_phone, user_email         │
+│ user_phone, user_email         │         │ reward_id, reward_title        │
+│ contest_id, ticket_count       │         │ credits_spent, status          │
+│ amount_paid, credits_issued    │         │ created_at                     │
+│ referral_code_used, status     │         └────────────────────────────────┘
+│ razorpay_order_id, payment_id  │
+└────────────────────────────────┘
                 │
                 ▼
 ┌────────────────────────────────┐         ┌────────────────────────────────┐
@@ -521,9 +535,9 @@ Both the **Contest App** and the **Booking App** connect directly to the same **
 |---|---|---|---|
 | `user_credits` | Master balance ledger for drive credits | Contest App, Booking App | `identifier`, `credits_remaining`, `status`, `amount_paid` |
 | `credit_transactions` | Audit ledger of all credits spent/debited | Contest App, Booking App | `credit_id`, `amount_debited`, `balance_after`, `booking_ref` |
-| `contests` | Supercar giveaway configurations | Contest App | `id`, `car_name`, `target_tickets`, `sold_tickets`, `status` |
+| `contests` | Supercar giveaway configurations & media | Contest App | `id`, `car_name`, `gallery_images` (JSONB), `youtube_url` (TEXT), `target_tickets`, `sold_tickets`, `status` |
 | `contest_tickets` | Allocated 5-digit lucky ticket entries | Contest App | `contest_id`, `ticket_number`, `user_email`, `user_phone` |
-| `contest_orders` | Cash transactions for ticket purchases | Contest App | `id`, `ticket_count`, `amount_paid`, `referral_code_used` |
+| `contest_orders` | Razorpay payment & ticket orders | Contest App | `id`, `ticket_count`, `amount_paid`, `referral_code_used`, `razorpay_order_id` |
 | `referral_profiles` | 2-Tier referral affiliate data | Contest App | `referral_code`, `tickets_bought`, `is_cash_unlocked`, `total_cash_earned` |
 | `referral_payouts` | Withdrawal requests for cash commissions | Contest App Admin | `payout_code`, `amount`, `status`, `upi_id`, `bank_account` |
 | `reward_redemptions`| Record of drive/media session claims | Contest App | `reward_id`, `reward_title`, `credits_spent`, `status` |
@@ -545,7 +559,7 @@ Both the **Contest App** and the **Booking App** connect directly to the same **
 | `NEXT_PUBLIC_CONTEST_APP_URL` | Booking App, Root | Contest app entry point |
 | `ADMIN_EMAIL` | Booking App | Superadmin login identifier |
 | `ADMIN_PASSWORD` | Booking App | Superadmin bcrypt initial credential |
-| `RAZORPAY_KEY_ID` & `RAZORPAY_KEY_SECRET` | Booking App | Production payment gateway credentials |
+| `RAZORPAY_KEY_ID` & `RAZORPAY_KEY_SECRET` | Contest App, Booking App | Razorpay gateway credentials (`rzp_test_TVcBqxdRYHZ9A2` on Contest App) |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | Booking App, Root API | Transactional email delivery service |
 
 ---
